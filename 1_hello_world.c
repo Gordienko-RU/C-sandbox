@@ -1,7 +1,11 @@
 #include <stdio.h>
-int main()
-{
-   // printf() displays the string inside quotation
-   printf("Hello, World!");
+
+int main() {
+   const char greeting[] = "Hello world";
+
+   printf("%p\n", &greeting);
+   printf("%p\n", (&greeting + 1000));
+
+   printf("%s\n", greeting);
    return 0;
-}
+};
