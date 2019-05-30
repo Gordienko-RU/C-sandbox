@@ -6,13 +6,13 @@ int main() {
   time_t s = time(NULL);
   struct tm *currentTime = localtime(&s);
 
+  printf("%d", (currentTime->tm_year));
   printf("insert month index");
   scanf("%d", &monthNumber);
 
-  s = time(NULL);
+  // if (monthNumber == 2 && currentTime->tm_yday) {
+  //   printf("case");
+  // }
 
-
-  if (monthNumber == 2 && (localtime(&(time(NULL)))).tm_yday) {
-
-  }
+  return 0;
 }
