@@ -18,5 +18,14 @@ int main() {
   cout << "floatNumberWithIntegerPartOverflow:" << setprecision(20) << fixed;
   cout << floatNumberWithIntegerPartOverflow << endl;
 
+  float valueToCompare = 1.1;
+
+  // NOTE: not the same, because of in memory representation
+  if (1.1 == valueToCompare) {
+    cout << "equals" << endl;
+  } else {
+    cout << "not equals" << endl;
+  }
+
   return 0;
 }
