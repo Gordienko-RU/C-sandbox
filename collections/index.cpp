@@ -21,7 +21,9 @@ int main() {
   // NOTE: initialize array with values regardless on scope
   int arrayOfZeros[10] = { 0 };
 
-  for(int i = 0; i < 10; i++) {
+  const int length = sizeof(arrayOfZeros) / sizeof(int);
+
+  for(int i = 0; i < length; i++) {
     cout << "element value: " << arrayOfZeros[i] << endl;
   };
 
