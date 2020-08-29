@@ -43,3 +43,5 @@ void renderTable(int size) {
     cout << endl;
   };
 }
+
+#endif
