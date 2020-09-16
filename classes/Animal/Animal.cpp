@@ -10,6 +10,10 @@ Animal::Animal(string name, string sound) {
   m_sound = sound;
 };
 
+Animal::~Animal() {
+  cout << "Destructurization happened." << endl;
+}
+
 void Animal::makeSound() {
   cout << "The sound is: " << m_sound << endl;
 };

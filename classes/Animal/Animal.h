@@ -11,6 +11,7 @@ class Animal {
     string m_sound;
   public:
     Animal(string name, string sound);
+    ~Animal();
     void makeSound();
     string getName() { return m_name; };
 };
