@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -27,4 +28,16 @@ int main() {
   cout << "boolean1: " << boolean1 << endl; // true(e.g. 1)
 
   cout << "numberAndBooleanAreEqual: " << numberAndBooleanAreEqual << endl;
+
+  // NOTE: concatenation
+  int numb = '7';
+  string message = "my numb is - ";
+
+  stringstream ss;
+  ss << message << numb;
+  string concatenated = ss.str();
+  cout << concatenated << endl;
+
+  string concatenatedWithToString = message + to_string(numb);
+  cout << concatenatedWithToString << endl;
 }
