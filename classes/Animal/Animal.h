@@ -12,8 +12,14 @@ class Animal {
   public:
     Animal(string name, string sound);
     ~Animal();
+
     void makeSound();
+
     string getName() { return m_name; };
+    string getSound() { return m_sound; };
+
+    void setName(string name) { m_name = name; };
+    void setSound(string sound) { m_sound = sound; };
 };
 
 #endif

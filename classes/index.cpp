@@ -20,5 +20,8 @@ int main() {
   cout << "What it says?" << endl;
   marsikTheKitty.makeSound();
 
+  marsikTheKitty.setName("Voldemar");
+  cout << "Renamed kitty name is: " << marsikTheKitty.getName() << endl;
+
   return 0;
 };
