@@ -10,7 +10,9 @@ class Animal {
     string m_name;
     string m_sound;
   public:
+    Animal();
     Animal(string name, string sound);
+
     ~Animal();
 
     void makeSound();

@@ -23,5 +23,11 @@ int main() {
   marsikTheKitty.setName("Voldemar");
   cout << "Renamed kitty name is: " << marsikTheKitty.getName() << endl;
 
+  Animal animal;
+
+  cout << "Introduce our new not init animal: " << animal.getName() << endl;
+  cout << "What it says?" << endl;
+  animal.makeSound();
+
   return 0;
 };
