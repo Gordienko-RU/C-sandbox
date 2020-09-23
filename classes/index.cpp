@@ -29,5 +29,8 @@ int main() {
   cout << "What it says?" << endl;
   animal.makeSound();
 
+  // NOTE: 'this' can be used only within non-static class method
+  // cout << "this in main function context is equal: " << this << endl;
+
   return 0;
 };
