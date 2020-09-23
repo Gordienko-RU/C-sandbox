@@ -7,8 +7,8 @@ using namespace std;
 
 class Animal {
   private:
-    string m_name;
-    string m_sound;
+    string name;
+    string sound;
   public:
     Animal();
     Animal(string name, string sound);
@@ -17,11 +17,11 @@ class Animal {
 
     void makeSound();
 
-    string getName() { return m_name; };
-    string getSound() { return m_sound; };
+    string getName() { return name; };
+    string getSound() { return sound; };
 
-    void setName(string name) { m_name = name; };
-    void setSound(string sound) { m_sound = sound; };
+    void setName(string name) { this->name = name; };
+    void setSound(string sound) { this->sound = sound; };
 };
 
 #endif

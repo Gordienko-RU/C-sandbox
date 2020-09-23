@@ -6,13 +6,13 @@
 using namespace std;
 
 Animal::Animal() {
-  m_name = "Not defined";
-  m_sound = "Not defined";
+  name = "Not defined";
+  sound = "Not defined";
 };
 
 Animal::Animal(string name, string sound) {
-  m_name = name;
-  m_sound = sound;
+  this->name = name;
+  this->sound = sound;
 };
 
 Animal::~Animal() {
@@ -20,5 +20,5 @@ Animal::~Animal() {
 }
 
 void Animal::makeSound() {
-  cout << "The sound is: " << m_sound << endl;
+  cout << "The sound is: " << sound << endl;
 };
