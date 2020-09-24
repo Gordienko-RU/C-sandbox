@@ -10,7 +10,8 @@ class Animal {
     string name;
     string sound;
   public:
-    Animal();
+    // NOTE: constructor initialization list approach
+    Animal(): name("not defined"), sound("not defined") {};
     Animal(string name, string sound);
 
     ~Animal();

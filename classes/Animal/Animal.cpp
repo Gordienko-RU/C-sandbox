@@ -5,11 +5,6 @@
 
 using namespace std;
 
-Animal::Animal() {
-  name = "Not defined";
-  sound = "Not defined";
-};
-
 Animal::Animal(string name, string sound) {
   this->name = name;
   this->sound = sound;
