@@ -25,5 +25,14 @@ int main() {
     cout << *pElementToProceed << endl;
   }
 
+  // NOTE: subtraction of pointers
+  const long longArr[] = { 1, 2, 3 };
+
+  const long *firstElement = longArr;
+  const long *lastElement = &longArr[2];
+  cout << "array length is : " << lastElement - firstElement << endl;
+
+  cout << "size of long type is : " << sizeof(long) << endl;
+
   return 0;
 }
