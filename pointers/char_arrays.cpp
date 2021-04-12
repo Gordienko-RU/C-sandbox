@@ -3,23 +3,26 @@
 using namespace std;
 
 int main() {
-  // NOTE: chars array reversing
-  const char arrayToReverse[] = "123";
-  const int lastElementIndex = sizeof(arrayToReverse) - 2;
-  const char* tailPointer = &arrayToReverse[lastElementIndex];
-  const char* headPointer = arrayToReverse;
-
-  cout << "reversed char array : " << flush;
+  // NOTE: chars array reversing in place
+  char arrayToReverse[] = "123";
+  const int lastElementIndex = sizeof(arrayToReverse) - 2; // extra one for \0 symbol
+  char* tailPointer = &arrayToReverse[lastElementIndex];
+  char* headPointer = arrayToReverse;
 
   while(true) {
-    cout << *tailPointer;
+    const char temp = *headPointer;
+    *headPointer = *tailPointer;
+    *tailPointer = temp;
 
     if (tailPointer == headPointer) {
       break;
     } else {
+      headPointer++;
       tailPointer--;
     };
   }
+
+  cout << "inline reversed char array : " << arrayToReverse << flush;
 
   cout << endl;
 
