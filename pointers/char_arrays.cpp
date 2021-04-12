@@ -5,16 +5,20 @@ using namespace std;
 int main() {
   // NOTE: chars array reversing
   const char arrayToReverse[] = "123";
-  const char* lastElementPointer = &arrayToReverse[sizeof(arrayToReverse) - 1];
+  const int lastElementIndex = sizeof(arrayToReverse) - 2;
+  const char* tailPointer = &arrayToReverse[lastElementIndex];
+  const char* headPointer = arrayToReverse;
 
   cout << "reversed char array : " << flush;
 
   while(true) {
-    if (lastElementPointer == arrayToReverse) {
-      break;
-    };
+    cout << *tailPointer;
 
-    cout << *lastElementPointer--;
+    if (tailPointer == headPointer) {
+      break;
+    } else {
+      tailPointer--;
+    };
   }
 
   cout << endl;
