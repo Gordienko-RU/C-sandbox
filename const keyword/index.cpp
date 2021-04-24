@@ -2,21 +2,24 @@
 
 using namespace std;
 
-  // class SomeClass
-  // {
-  // private:
-  //   int val;
-  // public:
-  //   void setVal(int val) {
-  //     this->val = val;
-  //   }
-  //   void getVal() const {
-  //     this->val = 3; // Error.
-  //     cout << this->val << endl;
-  //   };
-  // };
+// class SomeClass {
+//   private:
+//     int val;
+//   public:
+//     SomeClass() {}
+//     void setVal(int val) {
+//       this->val = val;
+//     }
+//     void getVal() const {
+//       // this->val = 3; // Error.
+//       cout << this->val << endl;
+//     };
+// };
 
 int main() {
+  // const SomeClass inst1;
+  // inst1.setVal(123); // Error. Call of not const method which lead to mutation.
+
   // /*
   // const int immutableVariable = 12;
   // immutableVariable = 14; // Error here, since we are using const.
@@ -49,6 +52,7 @@ int main() {
 
   // instance.setVal(145);
   // instance.getVal();
+
 
 
   return 0; 
