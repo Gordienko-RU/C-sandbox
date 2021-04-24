@@ -20,6 +20,14 @@ int main() {
   // const SomeClass inst1;
   // inst1.setVal(123); // Error. Call of not const method which lead to mutation.
 
+  // SomeClass inst1;
+  // SomeClass inst2;
+
+  // const SomeClass arr[] = { inst1, inst2 };
+
+  // arr[0].setVal(12); // Error. call of non-const method.
+  // arr[0].getVal();
+
   // /*
   // const int immutableVariable = 12;
   // immutableVariable = 14; // Error here, since we are using const.
