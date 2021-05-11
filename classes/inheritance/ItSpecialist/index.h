@@ -23,3 +23,21 @@ class ItSpecialist: public Man {
 
 #endif
 
+// Within class we can call only direct subclass constructor.
+// class Machine {
+//   public Machine(int number) {
+//     ...
+//   }
+// }
+
+// class Vehicle {
+//   public Vehicle(int number): Machine(number) {
+//     ...
+//   }
+// }
+
+// class Car {
+//   public Car(int number): Vehicle(number) {
+//     ...
+//   }
+// }
