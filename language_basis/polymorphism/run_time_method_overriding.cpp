@@ -23,6 +23,7 @@ class C: public A {
 };
 
 int main() {
+  // pointers
   B b; C c; B * bP = new B;
   A* arr[] = { &b, &c, bP };
 
@@ -35,7 +36,10 @@ int main() {
     Derived class B
   */
 
+  // references
+  A &ref = b;
+  ref.log();
+  // Derived class B
 
   return 0;
 }
-
