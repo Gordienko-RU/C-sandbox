@@ -15,6 +15,10 @@ class Todo {
     return this->content;
   }
 
+  bool isDone() const {
+    return this->done;
+  }
+
   void markAsDone() {
     this->done = true;
   }
@@ -41,7 +45,23 @@ class Command {
   }
 };
 
+void outputTodos(list<Todo> &todos) {
+  if (todos.size()) {
+    cout << "Current items are:" << endl;
+
+    list<Todo>::iterator it = todos.begin();
+
+    for (int i = 0; it != todos.end(); i++) {
+      cout << i << ". " << it->getContent() << " " << it->isDone() << endl;
+      ++it;
+    }
+  } else {
+    cout << "You have no items at the moment." << endl;
+  }
+}
+
 int main() {
+  // TODO: to much stuff here, should be splitted to precedures or classes
   const Command ADD_COMMAND("ADD", 0);
   const Command DELETE_COMMAND("DELETE", 1);
   const Command DONE_COMMAND ("DONE", 2);
@@ -62,23 +82,84 @@ int main() {
   bool programRunning = true;
   int lastEnteredCommandCode;
 
+  // TODO: implement logic for list reading from binary file
+  list<Todo> todos;
+  outputTodos(todos);
+
+  // TODO: move program handling to separate class
   while(programRunning) {
     cout << "Enter a command code:" << endl;
     cin >> lastEnteredCommandCode;
 
     if (lastEnteredCommandCode == ADD_COMMAND.getCode()) {
+      string value;
+      cin >> value;
+      Todo todo(value);
+      todos.push_back(todo);
+
+      outputTodos(todos);
     }
 
     if (lastEnteredCommandCode == DELETE_COMMAND.getCode()) {
+      int index;
+      cin >> index;
+
+      list<Todo>::iterator it = todos.begin();
+      int i = 0;
+
+      while (it != todos.end()) {
+        if (i == index) {
+          it = todos.erase(it);
+        } else {
+          ++it;
+        }
+
+        ++i;
+      }
+
+      outputTodos(todos);
     }
 
     if (lastEnteredCommandCode == DONE_COMMAND.getCode()) {
+      int index;
+      cin >> index;
+
+      list<Todo>::iterator it = todos.begin();
+      int i = 0;
+
+      while (it != todos.end()) {
+        if (i == index) {
+          it->markAsDone();
+        }
+
+        ++it;
+        ++i;
+      }
+
+      outputTodos(todos);
     }
 
     if (lastEnteredCommandCode == UNDONE_COMMAND.getCode()) {
+      int index;
+      cin >> index;
+
+      list<Todo>::iterator it = todos.begin();
+      int i = 0;
+
+      while (it != todos.end()) {
+        if (i == index) {
+          it->markAdUndone();
+        }
+
+        ++it;
+        ++i;
+      }
+
+      outputTodos(todos);
     }
 
     if (lastEnteredCommandCode == EXIT_COMMAND.getCode()) {
+      // TODO: implement logic for list writing to binary file
       programRunning = false;
     }
   }
