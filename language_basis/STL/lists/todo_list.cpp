@@ -1,5 +1,6 @@
 #include <iostream>
 #include <list>
+#include <fstream>
 
 using namespace std;
 
@@ -10,6 +11,7 @@ class Todo {
 
   public:
   Todo(string content): content(content), done(false) {};
+  Todo(string content, bool done): content(content), done(done) {};
 
   string getContent() const {
     return this->content;
@@ -43,6 +45,50 @@ class Command {
   int getCode() const {
     return this->code;
   }
+};
+
+// TODO: add error handling to catch errors while file accessing
+class TodoStorage {
+  private:
+    const string fileName;
+
+  public:
+    TodoStorage(): fileName("todos.txt") {};
+
+    void writeTodosToFile(list<Todo> &todos) {
+      ofstream writeStream;
+      writeStream.open(this->fileName);
+
+      for (list<Todo>::iterator it = todos.begin(); it != todos.end(); it++) {
+        writeStream << it->getContent() << endl;
+        writeStream << it->isDone() << endl;
+      }
+
+      writeStream.close();
+    }
+
+    void fillTodosFromFile(list<Todo> &todos) {
+      ifstream readStream;
+      readStream.open(this->fileName);
+
+      while(readStream.good()) {
+        string content;
+        string doneStringified;
+
+        getline(readStream, content);
+        getline(readStream, doneStringified);
+
+        if (content.empty()) {
+          continue;
+        }
+
+        bool done = doneStringified == "1";
+        Todo todo(content, done);
+        todos.push_back(todo);
+      }
+
+      readStream.close();
+    }
 };
 
 void outputTodos(list<Todo> &todos) {
@@ -82,8 +128,11 @@ int main() {
   bool programRunning = true;
   int lastEnteredCommandCode;
 
+  TodoStorage todoStorage;
+
   // TODO: implement logic for list reading from binary file
   list<Todo> todos;
+  todoStorage.fillTodosFromFile(todos);
   outputTodos(todos);
 
   // TODO: move program handling to separate class
@@ -98,6 +147,7 @@ int main() {
       todos.push_back(todo);
 
       outputTodos(todos);
+      todoStorage.writeTodosToFile(todos);
     }
 
     if (lastEnteredCommandCode == DELETE_COMMAND.getCode()) {
@@ -118,6 +168,7 @@ int main() {
       }
 
       outputTodos(todos);
+      todoStorage.writeTodosToFile(todos);
     }
 
     if (lastEnteredCommandCode == DONE_COMMAND.getCode()) {
@@ -137,6 +188,7 @@ int main() {
       }
 
       outputTodos(todos);
+      todoStorage.writeTodosToFile(todos);
     }
 
     if (lastEnteredCommandCode == UNDONE_COMMAND.getCode()) {
@@ -156,6 +208,7 @@ int main() {
       }
 
       outputTodos(todos);
+      todoStorage.writeTodosToFile(todos);
     }
 
     if (lastEnteredCommandCode == EXIT_COMMAND.getCode()) {
