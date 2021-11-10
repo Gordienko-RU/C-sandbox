@@ -48,28 +48,14 @@ class Command {
 };
 
 // TODO: add error handling to catch errors while file accessing
-class TodoStorage {
+class TodoHandler {
   private:
-    const string fileName;
+    const string storageFileName;
+    list<Todo> todos;
 
-  public:
-    TodoStorage(): fileName("todos.txt") {};
-
-    void writeTodosToFile(list<Todo> &todos) {
-      ofstream writeStream;
-      writeStream.open(this->fileName);
-
-      for (list<Todo>::iterator it = todos.begin(); it != todos.end(); it++) {
-        writeStream << it->getContent() << endl;
-        writeStream << it->isDone() << endl;
-      }
-
-      writeStream.close();
-    }
-
-    void fillTodosFromFile(list<Todo> &todos) {
+    void fillTodosFromFile() {
       ifstream readStream;
-      readStream.open(this->fileName);
+      readStream.open(this->storageFileName);
 
       while(readStream.good()) {
         string content;
@@ -84,82 +70,96 @@ class TodoStorage {
 
         bool done = doneStringified == "1";
         Todo todo(content, done);
-        todos.push_back(todo);
+        this->todos.push_back(todo);
       }
 
-      readStream.close();
+    readStream.close();
+  }
+
+  public:
+    TodoHandler(): storageFileName("todos.txt") {
+      this->fillTodosFromFile();
+    };
+
+    // TODO: investigate why references can be used here
+    list<Todo> * getTodos() {
+      return &this->todos;
+    }
+
+    void writeTodosToFile() {
+      ofstream writeStream;
+      writeStream.open(this->storageFileName);
+
+      for (list<Todo>::iterator it = this->todos.begin(); it != this->todos.end(); it++) {
+        writeStream << it->getContent() << endl;
+        writeStream << it->isDone() << endl;
+      }
+
+      writeStream.close();
+    }
+
+    void outputTodos() {
+      if (this->todos.size()) {
+        cout << "Current items are:" << endl;
+
+        list<Todo>::iterator it = this->todos.begin();
+
+        for (int i = 0; it != this->todos.end(); i++) {
+          cout << i << ". " << it->getContent() << " " << it->isDone() << endl;
+          ++it;
+        }
+      } else {
+        cout << "You have no items at the moment." << endl;
+      }
     }
 };
 
-void outputTodos(list<Todo> &todos) {
-  if (todos.size()) {
-    cout << "Current items are:" << endl;
+class CommandHandler {
+  public:
+    const Command ADD_COMMAND;
+    const Command DELETE_COMMAND;
+    const Command DONE_COMMAND;
+    const Command UNDONE_COMMAND;
+    const Command EXIT_COMMAND;
 
-    list<Todo>::iterator it = todos.begin();
+    CommandHandler():
+      ADD_COMMAND("ADD", 0),
+      DELETE_COMMAND("DELETE", 1),
+      DONE_COMMAND ("DONE", 2),
+      UNDONE_COMMAND("UNDONE", 3),
+      EXIT_COMMAND("EXIT", 4) {};
 
-    for (int i = 0; it != todos.end(); i++) {
-      cout << i << ". " << it->getContent() << " " << it->isDone() << endl;
-      ++it;
+    void logCommands() {
+      cout << "command list:" << endl;
+
+      // TODO: is it worth to create collection here?
+      cout << 0 << " - " << this->ADD_COMMAND.getLabel() << endl;
+      cout << 1 << " - " << this->DELETE_COMMAND.getLabel() << endl;
+      cout << 2 << " - " << this->DONE_COMMAND.getLabel() << endl;
+      cout << 3 << " - " << this->UNDONE_COMMAND.getLabel() << endl;
+      cout << 4 << " - " << this->EXIT_COMMAND.getLabel() << endl;
     }
-  } else {
-    cout << "You have no items at the moment." << endl;
-  }
-}
 
-int main() {
-  // TODO: to much stuff here, should be splitted to precedures or classes
-  const Command ADD_COMMAND("ADD", 0);
-  const Command DELETE_COMMAND("DELETE", 1);
-  const Command DONE_COMMAND ("DONE", 2);
-  const Command UNDONE_COMMAND("UNDONE", 3);
-  const Command EXIT_COMMAND("EXIT", 4);
-
-  const Command COMMANDS[] = { ADD_COMMAND, DELETE_COMMAND, DONE_COMMAND, UNDONE_COMMAND, EXIT_COMMAND };
-  const int COMMANDS_AMOUNT = sizeof(COMMANDS) / sizeof(Command);
-
-  cout << "TODO LIST APP" << endl;
-  cout << "command list:" << endl;
-
-  for (int i = 0; i < COMMANDS_AMOUNT; i++) {
-    const Command command = COMMANDS[i];
-    cout << i << " - " << command.getLabel() << endl;
-  }
-
-  bool programRunning = true;
-  int lastEnteredCommandCode;
-
-  TodoStorage todoStorage;
-
-  // TODO: implement logic for list reading from binary file
-  list<Todo> todos;
-  todoStorage.fillTodosFromFile(todos);
-  outputTodos(todos);
-
-  // TODO: move program handling to separate class
-  while(programRunning) {
-    cout << "Enter a command code:" << endl;
-    cin >> lastEnteredCommandCode;
-
-    if (lastEnteredCommandCode == ADD_COMMAND.getCode()) {
+    void handleAdd(list<Todo> * todos, TodoHandler &todoHandler) {
       string value;
       cin >> value;
       Todo todo(value);
-      todos.push_back(todo);
+      todos->push_back(todo);
 
-      outputTodos(todos);
-      todoStorage.writeTodosToFile(todos);
+      todoHandler.outputTodos();
+      todoHandler.writeTodosToFile();
     }
 
-    if (lastEnteredCommandCode == DELETE_COMMAND.getCode()) {
+    void handleDelete(list<Todo> * todos, TodoHandler &todoHandler) {
       int index;
       cin >> index;
 
-      list<Todo>::iterator it = todos.begin();
+      list<Todo>::iterator it = todos->begin();
       int i = 0;
 
-      while (it != todos.end()) {
+      while (it != todos->end()) {
         if (i == index) {
-          it = todos.erase(it);
+          it = todos->erase(it);
         } else {
           ++it;
         }
@@ -167,18 +167,18 @@ int main() {
         ++i;
       }
 
-      outputTodos(todos);
-      todoStorage.writeTodosToFile(todos);
+      todoHandler.outputTodos();
+      todoHandler.writeTodosToFile();
     }
 
-    if (lastEnteredCommandCode == DONE_COMMAND.getCode()) {
+    void handleDone(list<Todo> * todos, TodoHandler &todoHandler) {
       int index;
       cin >> index;
 
-      list<Todo>::iterator it = todos.begin();
+      list<Todo>::iterator it = todos->begin();
       int i = 0;
 
-      while (it != todos.end()) {
+      while (it != todos->end()) {
         if (i == index) {
           it->markAsDone();
         }
@@ -187,18 +187,18 @@ int main() {
         ++i;
       }
 
-      outputTodos(todos);
-      todoStorage.writeTodosToFile(todos);
+      todoHandler.outputTodos();
+      todoHandler.writeTodosToFile();
     }
 
-    if (lastEnteredCommandCode == UNDONE_COMMAND.getCode()) {
+    void handleUndone(list<Todo> * todos, TodoHandler &todoHandler) {
       int index;
       cin >> index;
 
-      list<Todo>::iterator it = todos.begin();
+      list<Todo>::iterator it = todos->begin();
       int i = 0;
 
-      while (it != todos.end()) {
+      while (it != todos->end()) {
         if (i == index) {
           it->markAdUndone();
         }
@@ -207,12 +207,53 @@ int main() {
         ++i;
       }
 
-      outputTodos(todos);
-      todoStorage.writeTodosToFile(todos);
+      todoHandler.outputTodos();
+      todoHandler.writeTodosToFile();
     }
 
-    if (lastEnteredCommandCode == EXIT_COMMAND.getCode()) {
-      // TODO: implement logic for list writing to binary file
+    void logEnterIndexMessage() {
+      cout << "Enter item index:" << endl;
+    }
+};
+
+int main() {
+  CommandHandler commandHandler;
+
+  cout << "TODO LIST APP" << endl;
+  commandHandler.logCommands();
+
+  bool programRunning = true;
+  int lastEnteredCommandCode;
+
+  TodoHandler todoHandler;
+  todoHandler.outputTodos();
+  list<Todo> * todos = todoHandler.getTodos();
+
+  while(programRunning) {
+    cout << "Enter a command code:" << endl;
+    cin >> lastEnteredCommandCode;
+
+    if (lastEnteredCommandCode == commandHandler.ADD_COMMAND.getCode()) {
+      cout << "Enter item content:" << endl;
+      commandHandler.handleAdd(todos, todoHandler);
+    }
+
+    if (lastEnteredCommandCode == commandHandler.DELETE_COMMAND.getCode()) {
+      commandHandler.logEnterIndexMessage();
+      commandHandler.handleDelete(todos, todoHandler);
+    }
+
+    if (lastEnteredCommandCode == commandHandler.DONE_COMMAND.getCode()) {
+      commandHandler.logEnterIndexMessage();
+      commandHandler.handleDone(todos, todoHandler);
+    }
+
+    if (lastEnteredCommandCode == commandHandler.UNDONE_COMMAND.getCode()) {
+      commandHandler.logEnterIndexMessage();
+      commandHandler.handleUndone(todos, todoHandler);
+    }
+
+    if (lastEnteredCommandCode == commandHandler.EXIT_COMMAND.getCode()) {
       programRunning = false;
     }
   }
