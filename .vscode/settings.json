@@ -11,7 +11,8 @@
     "__split_buffer": "cpp",
     "filesystem": "cpp",
     "list": "cpp",
-    "__locale": "cpp"
+    "__locale": "cpp",
+    "chrono": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

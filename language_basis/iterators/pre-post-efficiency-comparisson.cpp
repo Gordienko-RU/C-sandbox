@@ -4,6 +4,12 @@
 
 using namespace std;
 
+void logDuration(chrono::time_point<chrono::high_resolution_clock> start, chrono::time_point<chrono::high_resolution_clock> stop) {
+  chrono::duration_cast<chrono::microseconds>(stop - start);
+
+  cout << (chrono::duration_cast<chrono::microseconds>(stop - start)).count() << endl;
+}
+
 int main() {
   chrono::time_point<chrono::high_resolution_clock> t1, t2, t3, t4, t5;
 
@@ -37,10 +43,16 @@ int main() {
 
   t5 = chrono::high_resolution_clock::now();
 
-  cout << "intregral post-inc. takes: " << t2 - t1 << endl;
-  cout << "intregral pre-inc. takes: " << t3 - t2 << endl;
-  cout << "iterator post-inc. takes: " << t4 - t3 << endl;
-  cout << "iterator pre-inc. takes: " << t5 - t4 << endl;
+  cout << "intregral post-inc. takes: "<< endl;
+  logDuration(t1, t2);
+  cout << "intregral pre-inc. takes: " << endl;
+  logDuration(t2, t3);
+  cout << "iterator post-inc. takes: " << endl;
+  logDuration(t3, t4);
+  cout << "iterator pre-inc. takes: " << endl;
+  logDuration(t4, t5);
+
+  // NOTE: pre-inc is always faster
 
   return 0;
 }
