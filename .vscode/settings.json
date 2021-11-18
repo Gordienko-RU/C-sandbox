@@ -12,7 +12,8 @@
     "filesystem": "cpp",
     "list": "cpp",
     "__locale": "cpp",
-    "chrono": "cpp"
+    "chrono": "cpp",
+    "utility": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }
