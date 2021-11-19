@@ -13,7 +13,8 @@
     "list": "cpp",
     "__locale": "cpp",
     "chrono": "cpp",
-    "utility": "cpp"
+    "utility": "cpp",
+    "map": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }
