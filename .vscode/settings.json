@@ -14,7 +14,11 @@
     "__locale": "cpp",
     "chrono": "cpp",
     "utility": "cpp",
-    "map": "cpp"
+    "map": "cpp",
+    "deque": "cpp",
+    "functional": "cpp",
+    "set": "cpp",
+    "unordered_map": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }
