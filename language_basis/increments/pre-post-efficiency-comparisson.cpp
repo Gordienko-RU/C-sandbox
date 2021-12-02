@@ -5,8 +5,6 @@
 using namespace std;
 
 void logDuration(chrono::time_point<chrono::high_resolution_clock> start, chrono::time_point<chrono::high_resolution_clock> stop) {
-  chrono::duration_cast<chrono::microseconds>(stop - start);
-
   cout << (chrono::duration_cast<chrono::microseconds>(stop - start)).count() << endl;
 }
 
