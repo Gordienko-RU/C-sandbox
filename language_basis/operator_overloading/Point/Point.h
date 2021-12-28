@@ -14,6 +14,8 @@ class Point {
     Point(): x(0), y(0) {};
     Point(double x, double y): x(x), y(y) {};
 
+    double operator[](int index) const;
+
     friend ostream & operator<<(ostream &stream, const Point &point);
     friend Point & operator+(Point &point, double a);
     friend Point & operator+(double a, Point &point);
