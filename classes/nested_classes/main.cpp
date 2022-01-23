@@ -2,20 +2,22 @@
 
 using namespace std;
 
+template<typename A>
 class Test {
   public:
     class Nested;
 };
 
-class Test::Nested {
+template<typename A>
+class Test<A>::Nested {
   public:
     Nested() {
-      cout << "Nested class created." << endl;
+      cout << "Nested class created. Template param result: " << A() << endl;
     }
 };
 
 int main() {
-  Test::Nested nested;
+  Test<int>::Nested nested;
 
   return 0;
 }
