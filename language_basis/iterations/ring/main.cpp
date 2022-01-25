@@ -11,9 +11,18 @@ int main() {
   strings.add("three");
   strings.add("four");
 
-  for (int i = 0; i < strings.size(); ++i) {
-    cout << strings.get(i) << endl;
+  for (string value: strings) {
+    cout << "value is: " << value << endl;
   }
+
+  // ring<string>::iterator it = strings.begin();
+
+  // cout << "from iterator: " << endl;
+  // cout << *it << endl;
+  // ++it;
+  // cout << *it << endl;
+  // ++it;
+  // cout << *it << endl;
 
   return 0;
 };
