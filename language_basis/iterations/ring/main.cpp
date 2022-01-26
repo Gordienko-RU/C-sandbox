@@ -15,14 +15,5 @@ int main() {
     cout << "value is: " << value << endl;
   }
 
-  // ring<string>::iterator it = strings.begin();
-
-  // cout << "from iterator: " << endl;
-  // cout << *it << endl;
-  // ++it;
-  // cout << *it << endl;
-  // ++it;
-  // cout << *it << endl;
-
   return 0;
 };

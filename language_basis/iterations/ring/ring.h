@@ -14,8 +14,6 @@ class ring {
   public:
     ring(int bufferMaxSize): bufferMaxSize(bufferMaxSize) {};
 
-    class iterator;
-
     void add(A item) {
       const bool bufferFull = this->buffer.size() == this->bufferMaxSize;
 
@@ -35,35 +33,12 @@ class ring {
       return this->buffer.size();
     }
 
-    ring::iterator begin() {
-      ring::iterator it(this->buffer, 0);
-
-      return it;
+    typename deque<A>::iterator begin() {
+      return this->buffer.begin();
     }
 
-    ring::iterator end() {
-      ring::iterator it(this->buffer, this->bufferMaxSize);
-
-      return it;
-    }
-};
-
-template<class A>
-class ring<A>::iterator {
-  public:
-    int currentIndex;
-    deque<A> &buffer;
-
-    iterator(deque<A> &buffer, int startIndex): currentIndex(startIndex), buffer(buffer) {};
-
-    iterator & operator++() {
-      ++this->currentIndex;
-
-      return *this;
-    }
-
-    A & operator*() {
-      return this->buffer[this->currentIndex];
+    typename deque<A>::iterator end() {
+      return this->buffer.end();
     }
 };
 
