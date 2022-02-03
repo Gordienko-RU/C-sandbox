@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -8,7 +9,9 @@ class A {
 
   A() {
     x = 0;
-  };
+  }
+
+  A(int x): x{x} {};
 };
 
 int main() {
@@ -23,12 +26,20 @@ int main() {
 
   // NOTE: Uniform initialization.
   int j {};
-  int y {4.5}; // NOTE: narrowing not allowed, error
+  // int y{4.5}; // NOTE: narrowing not allowed, error
   int n = {10};
-  int s {10};
+  int s{10};
   int h[]{ 1, 2, 3 };
-  A b{};
-  A b1{b};
+  A a2{};
+  A a3{a2};
+
+  vector<int> numbers {1, 2, 9, 20, 34};
+
+  for (auto numb: numbers) {
+    cout << numb << endl;
+  }
+
+  A a4{7};
 
   return 0;
 }
