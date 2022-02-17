@@ -9,9 +9,9 @@ void log(const int &val) {
 }
 
 template<typename A>
-auto sumAndLogFactory(A baseValue) {
-  return [baseValue](A value) {
-    cout << baseValue + value << endl;
+auto sumWithIncrementedValueAndLogFactory(A baseValue) {
+  return [baseValue](A value) mutable {
+    cout << ++baseValue + value << endl;
   };
 }
 
@@ -32,8 +32,8 @@ int main() {
   }();
 
   // function creation
-  auto f = sumAndLogFactory(12);
-  f(5); // 17
+  auto f = sumWithIncrementedValueAndLogFactory(12);
+  f(5); // 18
 
   return 0;
 }
