@@ -34,6 +34,13 @@ int main() {
   // function creation
   auto f = sumWithIncrementedValueAndLogFactory(12);
   f(5); // 18
+  f(5); // 19
+  f(1); // 16
+
+  auto f1 = sumWithIncrementedValueAndLogFactory(14);
+  f1(5); // 20
+  f1(5); // 21
+  f1(1); // 18
 
   return 0;
 }
